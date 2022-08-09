@@ -320,6 +320,20 @@ impl PublicKey {
             Err(InternalError::VerifyError.into())
         }
     }
+
+    /// Perform hashing to the group using the Elligator2 map
+    /// This generates a public key that we assume nobody knows its corresponding private key
+    ///
+    /// See https://tools.ietf.org/html/draft-irtf-cfrg-hash-to-curve-10#section-6.7.1
+    pub fn hash_from_bytes<D>(bytes: &[u8]) -> Self
+    where
+        D: Digest<OutputSize = U64> + Default,
+    {
+        let point = EdwardsPoint::hash_from_bytes::<D>(bytes);
+        let compressed = point.compress();
+
+        Self(compressed, point)
+    }
 }
 
 impl Verifier<ed25519::Signature> for PublicKey {

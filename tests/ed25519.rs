@@ -143,6 +143,8 @@ mod vectors {
     ];
 
     fn compute_hram(message: &[u8], pub_key: &EdwardsPoint, signature_r: &EdwardsPoint) -> Scalar {
+        use curve25519_dalek::digest::Update;
+
         let k_bytes = Sha512::default()
             .chain(&signature_r.compress().as_bytes())
             .chain(&pub_key.compress().as_bytes()[..])
