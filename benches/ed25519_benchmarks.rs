@@ -64,12 +64,14 @@ mod ed25519_benches {
         any(feature = "alloc", feature = "std")
     ))]
     fn verify_batch_signatures(c: &mut Criterion) {
+        use criterion::BenchmarkId;
         use ed25519_dalek::PublicKey;
+
         static BATCH_SIZES: [usize; 8] = [4, 8, 16, 32, 64, 96, 128, 256];
         let mut group = c.benchmark_group("batch-signature-verification");
         for i in BATCH_SIZES {
             group.bench_with_input(
-                "Ed25519 batch signature verification",
+                BenchmarkId::new("Ed25519 batch signature verification", &i),
                 &i,
                 |b, &size| {
                     let mut csprng: ThreadRng = thread_rng();
