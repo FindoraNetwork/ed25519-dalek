@@ -16,9 +16,14 @@ use criterion::Criterion;
 
 mod ed25519_benches {
     use super::*;
+
+    #[cfg(all(
+        any(feature = "batch", feature = "batch_deterministic"),
+        any(feature = "alloc", feature = "std")
+    ))]
     use ed25519_dalek::verify_batch;
+
     use ed25519_dalek::Keypair;
-    use ed25519_dalek::PublicKey;
     use ed25519_dalek::Signature;
     use ed25519_dalek::Signer;
     use rand::prelude::ThreadRng;
@@ -54,12 +59,18 @@ mod ed25519_benches {
         });
     }
 
+    #[cfg(all(
+        any(feature = "batch", feature = "batch_deterministic"),
+        any(feature = "alloc", feature = "std")
+    ))]
     fn verify_batch_signatures(c: &mut Criterion) {
+        use ed25519_dalek::PublicKey;
         static BATCH_SIZES: [usize; 8] = [4, 8, 16, 32, 64, 96, 128, 256];
-
-        c.bench_function_over_inputs(
+        let mut group = c.benchmark_group("batch-signature-verification");
+        group.bench_with_input(
             "Ed25519 batch signature verification",
-            |b, &&size| {
+            &BATCH_SIZES,
+            |b, &size| {
                 let mut csprng: ThreadRng = thread_rng();
                 let keypairs: Vec<Keypair> =
                     (0..size).map(|_| Keypair::generate(&mut csprng)).collect();
@@ -72,7 +83,6 @@ mod ed25519_benches {
 
                 b.iter(|| verify_batch(&messages[..], &signatures[..], &public_keys[..]));
             },
-            &BATCH_SIZES,
         );
     }
 
@@ -84,6 +94,10 @@ mod ed25519_benches {
         });
     }
 
+    #[cfg(all(
+        any(feature = "batch", feature = "batch_deterministic"),
+        any(feature = "alloc", feature = "std")
+    ))]
     criterion_group! {
         name = ed25519_benches;
         config = Criterion::default();
@@ -92,6 +106,20 @@ mod ed25519_benches {
             verify,
             verify_strict,
             verify_batch_signatures,
+            key_generation,
+    }
+
+    #[cfg(not(all(
+        any(feature = "batch", feature = "batch_deterministic"),
+        any(feature = "alloc", feature = "std")
+    )))]
+    criterion_group! {
+        name = ed25519_benches;
+        config = Criterion::default();
+        targets =
+            sign,
+            verify,
+            verify_strict,
             key_generation,
     }
 }
