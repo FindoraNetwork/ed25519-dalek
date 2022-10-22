@@ -22,7 +22,7 @@ travis-ci = { repository = "dalek-cryptography/ed25519-dalek", branch = "master"
 features = ["nightly", "batch"]
 
 [dependencies]
-curve25519-dalek = { version = "3", default-features = false }
+curve25519-dalek = { git = "https://github.com/FindoraNetwork/curve25519-dalek", tag = "v3.2.0-f", default-features = false }
 ed25519 = { version = "1", default-features = false }
 merlin = { version = "3", default-features = false, optional = true }
 rand = { version = "0.8", default-features = false, optional = true }
@@ -63,6 +63,3 @@ legacy_compatibility = []
 u64_backend = ["curve25519-dalek/u64_backend"]
 u32_backend = ["curve25519-dalek/u32_backend"]
 simd_backend = ["curve25519-dalek/simd_backend"]
-
-[patch.crates-io]
-curve25519-dalek = { git = "https://github.com/FindoraNetwork/curve25519-dalek" }
