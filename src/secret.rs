@@ -240,7 +240,7 @@ impl<'d> Deserialize<'d> for SecretKey {
 // same signature scheme, and which both fail in exactly the same way.  For a
 // better-designed, Schnorr-based signature scheme, see Trevor Perrin's work on
 // "generalised EdDSA" and "VXEdDSA".
-pub(crate) struct ExpandedSecretKey {
+pub struct ExpandedSecretKey {
     pub(crate) key: Scalar,
     pub(crate) nonce: [u8; 32],
 }
