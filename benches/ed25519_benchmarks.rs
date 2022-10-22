@@ -67,23 +67,25 @@ mod ed25519_benches {
         use ed25519_dalek::PublicKey;
         static BATCH_SIZES: [usize; 8] = [4, 8, 16, 32, 64, 96, 128, 256];
         let mut group = c.benchmark_group("batch-signature-verification");
-        group.bench_with_input(
-            "Ed25519 batch signature verification",
-            &BATCH_SIZES,
-            |b, &size| {
-                let mut csprng: ThreadRng = thread_rng();
-                let keypairs: Vec<Keypair> =
-                    (0..size).map(|_| Keypair::generate(&mut csprng)).collect();
-                let msg: &[u8] = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                let messages: Vec<&[u8]> = (0..size).map(|_| msg).collect();
-                let signatures: Vec<Signature> =
-                    keypairs.iter().map(|key| key.sign(&msg)).collect();
-                let public_keys: Vec<PublicKey> =
-                    keypairs.iter().map(|key| key.public_key()).collect();
+        for i in BATCH_SIZES {
+            group.bench_with_input(
+                "Ed25519 batch signature verification",
+                &i,
+                |b, &size| {
+                    let mut csprng: ThreadRng = thread_rng();
+                    let keypairs: Vec<Keypair> =
+                        (0..size).map(|_| Keypair::generate(&mut csprng)).collect();
+                    let msg: &[u8] = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                    let messages: Vec<&[u8]> = (0..size).map(|_| msg).collect();
+                    let signatures: Vec<Signature> =
+                        keypairs.iter().map(|key| key.sign(&msg)).collect();
+                    let public_keys: Vec<PublicKey> =
+                        keypairs.iter().map(|key| key.public_key()).collect();
 
-                b.iter(|| verify_batch(&messages[..], &signatures[..], &public_keys[..]));
-            },
-        );
+                    b.iter(|| verify_batch(&messages[..], &signatures[..], &public_keys[..]));
+                },
+            );
+        }
     }
 
     fn key_generation(c: &mut Criterion) {
