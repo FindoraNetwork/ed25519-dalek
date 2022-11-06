@@ -240,6 +240,9 @@
 #[macro_use]
 extern crate std;
 
+#[macro_use]
+extern crate failure;
+
 pub extern crate ed25519;
 
 #[cfg(all(feature = "alloc", not(feature = "std")))]
@@ -262,6 +265,7 @@ extern crate zeroize;
     any(feature = "std", feature = "alloc")
 ))]
 mod batch;
+mod bip32;
 mod constants;
 mod errors;
 mod keypair;
@@ -276,6 +280,7 @@ pub use curve25519_dalek::digest::Digest;
     any(feature = "std", feature = "alloc")
 ))]
 pub use crate::batch::*;
+pub use crate::bip32::*;
 pub use crate::constants::*;
 pub use crate::errors::*;
 pub use crate::keypair::*;
