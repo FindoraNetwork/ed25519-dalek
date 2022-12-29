@@ -9,7 +9,7 @@
 
 #[macro_use]
 extern crate criterion;
-extern crate ed25519_dalek;
+extern crate noah_ed25519_dalek;
 extern crate rand;
 
 use criterion::Criterion;
@@ -21,11 +21,11 @@ mod ed25519_benches {
         any(feature = "batch", feature = "batch_deterministic"),
         any(feature = "alloc", feature = "std")
     ))]
-    use ed25519_dalek::verify_batch;
+    use noah_ed25519_dalek::verify_batch;
 
-    use ed25519_dalek::Keypair;
-    use ed25519_dalek::Signature;
-    use ed25519_dalek::Signer;
+    use noah_ed25519_dalek::Keypair;
+    use noah_ed25519_dalek::Signature;
+    use noah_ed25519_dalek::Signer;
     use rand::prelude::ThreadRng;
     use rand::thread_rng;
 
@@ -65,7 +65,7 @@ mod ed25519_benches {
     ))]
     fn verify_batch_signatures(c: &mut Criterion) {
         use criterion::BenchmarkId;
-        use ed25519_dalek::PublicKey;
+        use noah_ed25519_dalek::PublicKey;
 
         static BATCH_SIZES: [usize; 8] = [4, 8, 16, 32, 64, 96, 128, 256];
         let mut group = c.benchmark_group("batch-signature-verification");
