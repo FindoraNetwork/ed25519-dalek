@@ -11,7 +11,7 @@
 
 #[cfg(all(test, feature = "serde"))]
 extern crate bincode;
-extern crate ed25519_dalek;
+extern crate noah_ed25519_dalek;
 extern crate hex;
 extern crate rand;
 #[cfg(all(test, feature = "serde"))]
@@ -20,7 +20,7 @@ extern crate sha2;
 #[cfg(all(test, feature = "serde"))]
 extern crate toml;
 
-use ed25519_dalek::*;
+use noah_ed25519_dalek::*;
 
 use hex::FromHex;
 

@@ -21,11 +21,11 @@ mod ed25519_benches {
         any(feature = "batch", feature = "batch_deterministic"),
         any(feature = "alloc", feature = "std")
     ))]
-    use ed25519_dalek::verify_batch;
+    use noah_ed25519_dalek::verify_batch;
 
-    use ed25519_dalek::Keypair;
-    use ed25519_dalek::Signature;
-    use ed25519_dalek::Signer;
+    use noah_ed25519_dalek::Keypair;
+    use noah_ed25519_dalek::Signature;
+    use noah_ed25519_dalek::Signer;
     use rand::prelude::ThreadRng;
     use rand::thread_rng;
 
