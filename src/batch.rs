@@ -193,14 +193,14 @@ fn zero_rng() -> ZeroRng {
 /// # Examples
 ///
 /// ```
-/// extern crate ed25519_dalek;
+/// extern crate noah_ed25519_dalek;
 /// extern crate rand;
 ///
-/// use ed25519_dalek::verify_batch;
-/// use ed25519_dalek::Keypair;
-/// use ed25519_dalek::PublicKey;
-/// use ed25519_dalek::Signer;
-/// use ed25519_dalek::Signature;
+/// use noah_ed25519_dalek::verify_batch;
+/// use noah_ed25519_dalek::Keypair;
+/// use noah_ed25519_dalek::PublicKey;
+/// use noah_ed25519_dalek::Signer;
+/// use noah_ed25519_dalek::Signature;
 /// use rand::rngs::OsRng;
 ///
 /// # fn main() {

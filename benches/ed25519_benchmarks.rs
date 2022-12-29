@@ -65,7 +65,7 @@ mod ed25519_benches {
     ))]
     fn verify_batch_signatures(c: &mut Criterion) {
         use criterion::BenchmarkId;
-        use ed25519_dalek::PublicKey;
+        use noah_ed25519_dalek::PublicKey;
 
         static BATCH_SIZES: [usize; 8] = [4, 8, 16, 32, 64, 96, 128, 256];
         let mut group = c.benchmark_group("batch-signature-verification");
