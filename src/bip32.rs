@@ -10,9 +10,9 @@ pub extern crate derivation_path;
 
 pub use derivation_path::{ChildIndex, DerivationPath};
 //pub use ed25519_dalek::{PublicKey, SecretKey};
-use crate::secret::*;
-use crate::public::*;
 use crate::errors::SignatureError;
+use crate::public::*;
+use crate::secret::*;
 
 use hmac::{Hmac, Mac};
 use sha2::Sha512;

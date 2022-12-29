@@ -11,8 +11,8 @@
 
 #[cfg(all(test, feature = "serde"))]
 extern crate bincode;
-extern crate noah_ed25519_dalek;
 extern crate hex;
+extern crate noah_ed25519_dalek;
 extern crate rand;
 #[cfg(all(test, feature = "serde"))]
 extern crate serde_crate;
