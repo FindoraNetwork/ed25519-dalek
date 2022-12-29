@@ -9,7 +9,7 @@
 
 #[macro_use]
 extern crate criterion;
-extern crate ed25519_dalek;
+extern crate noah_ed25519_dalek;
 extern crate rand;
 
 use criterion::Criterion;
